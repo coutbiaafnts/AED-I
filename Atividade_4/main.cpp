@@ -142,43 +142,53 @@ int main()
     cout << "(1) - Inserir dados manualmente" << endl
          << "(2) - Carregar dados de um arquivo" << endl
          << "(0) - Sair" << endl;
-  } while (option != 0);
+    cin >> option;
 
-  switch (option)
-  {
-  case 0:
-    cout << "Saindo...";
-    Sleep(1000);
-    break;
-
-  case 1:
-    insertData();
-    calculateReport();
-    separator();
-    showReport();
-    separator();
-
-    do
+    switch (option)
     {
-      cout << "Deseja salvar as informações?" << endl
-           << "(1) - Sim" << endl
-           << "(2) - Não";
-      cin >> option;
+    case 0:
+      cout << "Saindo...";
+      Sleep(1000);
+      break;
 
-      system("cls");
+    case 1:
+      insertData();
+      calculateReport();
+      separator();
+      showReport();
+      separator();
 
-      if (option == 1)
+      do
       {
-        
-      }
+        cout << "Deseja salvar as informações?" << endl
+             << "(1) - Sim" << endl
+             << "(2) - Não";
+        cin >> option;
 
-    } while (option != 0);
+        system("cls");
 
-    break;
+        if (option == 1)
+        {
+          saveReport();
+          cout << "Relatório salvo!";
+          saveData();
+          cout << "Dados salvos!";
+        }
+        if (option == 2)
+        {
+          break;
+        }
 
-  default:
-    break;
-  }
+      } while (option != 0);
+
+      break;
+
+    default:
+      cout << "ERROR! Opção inválida...";
+      system("pause");
+      break;
+    }
+  } while (option != 0);
 
   cout << endl
        << endl;
