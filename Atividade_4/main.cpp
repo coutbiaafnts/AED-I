@@ -61,7 +61,10 @@ void calculateReport() // realiza os cálculos
     {
       biggestWage = person[i].wage;
     }
-    if ((person[i].sex == 'F' || person[i].sex == 'f') && person[i].wage > 1000) // verifica se o habitante da posição é uma mulher e se recebe mais de R$1000,00, se sim incrementa 1 à contagem
+
+    tolower(person[i].sex); // converte o caractere em MAIÚSCULO
+
+    if (person[i].sex == 'F' && person[i].wage > 1000) // verifica se o habitante da posição é uma mulher e se recebe mais de R$1000,00, se sim incrementa 1 à contagem
     {
       percentWomanWage++;
     }
@@ -139,16 +142,20 @@ int main()
 
   do // responsável pelo menu, onde o usuário insere a opção desejada
   {
-    cout << "(1) - Inserir dados manualmente" << endl
-         << "(2) - Carregar dados de um arquivo" << endl
-         << "(0) - Sair" << endl;
+    separator();
+    cout << "* |\t(1) - Inserir dados manualmente" << endl
+         << "* |\t(2) - Carregar dados de um arquivo" << endl
+         << "* |\t(0) - Sair" << endl
+         << "* |\tDigite uma opção: ";
     cin >> option;
+    system("cls");
 
     switch (option)
     {
     case 0:
       cout << "Saindo...";
       Sleep(1000);
+      system("cls");
       break;
 
     case 1:
@@ -160,9 +167,10 @@ int main()
 
       do
       {
-        cout << "Deseja salvar as informações?" << endl
-             << "(1) - Sim" << endl
-             << "(2) - Não";
+        cout << "* |\tDeseja salvar as informações?" << endl
+             << "* |\t(1) - Sim" << endl
+             << "* |\t(2) - Não" << endl
+             << "* |\tDigite uma opção: ";
         cin >> option;
 
         system("cls");
