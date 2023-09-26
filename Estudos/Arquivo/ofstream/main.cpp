@@ -18,7 +18,7 @@ int main()
 
   ofstream write; // criando a varável para o arquivo em modo de escrita
   // write.open("write.txt"); // criando o arquivo de fato ( sobrescrevendo )
-  write.open("file.txt", ios::app); // criando o arquivo de fato ( posiciona o cursor no final do arquivo e insere o conteúdo em seguida ( não sobrescreve ) )
+  write.open("fileWrite.txt", ios::app); // criando o arquivo de fato ( posiciona o cursor no final do arquivo e insere o conteúdo em seguida ( não sobrescreve ) )
 
   write << "Texto teste 3" << endl; // armazenando no arquivo
 
