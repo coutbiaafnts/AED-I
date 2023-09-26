@@ -1,6 +1,6 @@
 #include <iostream>
 #include <windows.h>
-#include <fstream>
+#include <fstream> // inclusão da biblioteca para arquivos
 
 using namespace std;
 
@@ -15,7 +15,7 @@ struct population // declara o tipo population
 float sumWage, medianWage, biggestWage, percentWomanWage; // variáveis para realizar os cálculos necessários
 int sumKids, medianKids;                                  // variáveis para realizar os cálculos necessários
 
-const int amountPopulation = 2; // constante que guarda o número de habitantes da cidade, utilizada durante o código para determinar repetições e cálculos de média
+const int amountPopulation = 10; // constante que guarda o número de habitantes da cidade, utilizada durante o código para determinar repetições e cálculos de média
 
 population person[amountPopulation]; // armazena os dados no struct
 
@@ -30,7 +30,7 @@ void separator() // divisor de organização
        << endl;
 }
 
-void insertData() // usuário insere manualmente os dados dos habitantes
+void insertData() // usuário insere manualmente os dados dos habitantes através de uma estrutura de repetição
 {
   for (int i = 0; i < amountPopulation; i++)
   {
@@ -87,10 +87,10 @@ void saveReport() // salva o relatório no .txt
 {
   write.open("Report.txt");
   write.clear();
-  write << medianWage << endl;
-  write << medianKids << endl;
-  write << biggestWage << endl;
-  write << percentWomanWage << endl;
+  write << "Média salarial dos habitantes da cidade: R$" << medianWage << endl;
+  write << "Média de filhos dos habitantes da cidade: " << medianKids << endl;
+  write << "O maior salário registrado na cidade: R$" << biggestWage << endl;
+  write << "Percentual de mulheres com salário superior a R$1000,00: " << percentWomanWage << "%" << endl;
   write.close();
 }
 
@@ -111,8 +111,7 @@ void saveData() // salva os dados no .txt
 void loadData() // carrega os dados do arquivo
 {
   read.open("DataList.txt"); // abre o arquivo ou cria um, se não existir
-
-  if (read.fail()) // se falhar a leitura do arquivo
+  if (read.fail())           // se falhar a leitura do arquivo
   {
     cout << "ERROR!";
     system("pause");
@@ -138,60 +137,68 @@ int main()
   UINT CPAGE_DEFAULT = GetConsoleOutputCP();
   SetConsoleOutputCP(CPAGE_UTF8);
 
-  int option;
+  int option = -1, saveOption = -1;
 
   do // responsável pelo menu, onde o usuário insere a opção desejada
   {
     separator();
-    cout << "* |\t(1) - Inserir dados manualmente" << endl
+    cout << "* |\t(1) - Inserir dados manualmente" << endl // mostra o menu ao usuário para que insira a opção desejada
          << "* |\t(2) - Carregar dados de um arquivo" << endl
          << "* |\t(0) - Sair" << endl
          << "* |\tDigite uma opção: ";
-    cin >> option;
+    cin >> option; 
     system("cls");
 
-    switch (option)
+    switch (option) // cada caso responde à opção do menu (Option)
     {
-    case 0:
+    case 0: // 
       cout << "Saindo...";
       Sleep(1000);
       system("cls");
       break;
 
     case 1:
-      insertData();
-      calculateReport();
+      insertData(); // insere os dados manualmente
+      calculateReport(); // realiza os códigos para gerar o relatório
       separator();
-      showReport();
+      showReport(); // mostra o relatório
       separator();
 
       do
       {
-        cout << "* |\tDeseja salvar as informações?" << endl
+        cout << "* |\tDeseja salvar as informações?" << endl // imprime menu de salvar ou não os dados e relatório nos .txt
              << "* |\t(1) - Sim" << endl
              << "* |\t(2) - Não" << endl
              << "* |\tDigite uma opção: ";
-        cin >> option;
+        cin >> saveOption;
 
         system("cls");
 
-        if (option == 1)
+        if (saveOption == 1) // salva
         {
           saveReport();
           cout << "Relatório salvo!";
           saveData();
           cout << "Dados salvos!";
         }
-        if (option == 2)
+        else if (saveOption == 2) // encerra o programa
         {
+          cout << "Encerrando programa...";
+          Sleep(2000);
           break;
         }
+        else if (saveOption != 1 && saveOption != 2)
+        {
+          cout << "ERROR! Opção inválida...";
+          system("pause");
+        }
 
-      } while (option != 0);
+      } while (saveOption != 2);
 
       break;
 
-    default:
+    default: // tratamento para valores inválidos no menu
+      system("cls");
       cout << "ERROR! Opção inválida...";
       system("pause");
       break;
@@ -200,5 +207,5 @@ int main()
 
   cout << endl
        << endl;
-  return 0;
+  return 0; // fim do programa
 }
