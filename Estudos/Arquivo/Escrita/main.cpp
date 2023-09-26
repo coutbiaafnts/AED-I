@@ -16,13 +16,13 @@ int main()
   // ifstream ->> ( entrada/leitura (>>) ) sai do arquivo e vai para o programa
   // fstream ->> ( entrada/saída ) não precisa definir um tipo para entrada ou saída
 
-  ofstream file; // criando a varável para o arquivo
-  // file.open("file.txt"); // criando o arquivo de fato ( sobrescrevendo )
-  file.open("file.txt", ios::app); // criando o arquivo de fato ( posiciona o cursor no final do arquivo e insere o conteúdo em seguida ( não sobrescreve ) )
+  ofstream write; // criando a varável para o arquivo em modo de escrita
+  // write.open("write.txt"); // criando o arquivo de fato ( sobrescrevendo )
+  write.open("file.txt", ios::app); // criando o arquivo de fato ( posiciona o cursor no final do arquivo e insere o conteúdo em seguida ( não sobrescreve ) )
 
-  file << "Texto teste 3" << endl; // armazenando no arquivo
+  write << "Texto teste 3" << endl; // armazenando no arquivo
 
-  file.close(); // fecha o arquivo e libera o espaço na memória ( sempre fechar o arquivo )
+  write.close(); // fecha o arquivo e libera o espaço na memória ( sempre fechar o arquivo )
 
   cout << endl
        << endl;
