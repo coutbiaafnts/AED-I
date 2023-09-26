@@ -3,49 +3,18 @@
 
 using namespace std;
 
-struct car // criando a estrutura
+struct cars // criando a estrutura
 {
   string name;      // propriedade da estrutura
   string color;     // propriedade da estrutura
   int power;        // propriedade da estrutura
   int maxVelocity;  // propriedade da estrutura
   int velocity = 0; // propriedade da estrutura
-
-  void insert(string stName, string stColor, int stPower, int stMazVelocity) // insere os valores para cada propriedade da estrutura
-  {
-    name = stName;
-    color = stColor;
-    power = stPower;
-    maxVelocity = stMazVelocity;
-  };
-
-  void show() // imprime os valores para cada propriedade da estrutura
-  {
-    cout << endl
-         << endl
-         << "Informações do carro 1: " << endl;
-    cout << "Nome: " << name << endl;
-    cout << "Cor: " << color << endl;
-    cout << "Potência: " << power << endl;
-    cout << "Velocidade Atual: " << velocity << endl;
-    cout << "Velocidade Máxima: " << maxVelocity << endl
-         << endl;
-  };
-
-  void changeVelocity(int chandeVelocity) // muda a velocidade atual do carro
-  {
-    velocity = chandeVelocity;
-
-    if (velocity > maxVelocity) // impede que a velocidade máxima seja ultrapassada
-    {
-      velocity = maxVelocity;
-    }
-    else if (velocity < 0) // impede que a velocidade mínima seja batida
-    {
-      velocity = 0;
-    };
-  };
 };
+
+const int amountCar = 2; // variável que determina o tamanho do vetor
+cars car[amountCar];     // criando um vetor para armazenar as propriedades de cada carro com base na estrutura ( car )
+void insert(), show();   // funções para o programa
 
 int main()
 {
@@ -53,17 +22,55 @@ int main()
   UINT CPAGE_DEFAULT = GetConsoleOutputCP();
   SetConsoleOutputCP(CPAGE_UTF8);
 
-  int amountCar; // variável que determina o tamanho do vetor
+  char change;
 
-  // usuário insere o valor desejado
-  cout << "Insira quantos carros deseja cadastrar: ";
-  cin >> amountCar;
-
-  car cars[amountCar]; // criando um vetor para armazenar as propriedades de cada carro com base na estrutura ( car )
-
-  
+  insert();
+  show();
 
   cout << endl
        << endl;
   return 0;
 }
+
+void insert()
+{
+  // // usuário insere o valor desejado
+  // cout << "Insira quantos carros deseja cadastrar: ";
+  // cin >> amountCar;
+
+  for (int i = 0; i < amountCar; i++)
+  {
+    cout << "Nome do carro: ";
+    cin >> car[i].name;
+
+    cout << "Cor do carro: ";
+    cin >> car[i].color;
+
+    cout << "Potência do carro: ";
+    cin >> car[i].power;
+
+    cout << "Velocidade máxima do carro: ";
+    cin >> car[i].maxVelocity;
+
+    cout << "Velocidade atual do carro: ";
+    cin >> car[i].velocity;
+    cout << endl
+         << endl;
+  };
+};
+
+void show() // imprime os valores para cada propriedade da estrutura
+{
+  for (int i = 0; i < amountCar; i++)
+  {
+    cout << endl
+         << endl
+         << "Informações do " << i + 1 << "º carro" << endl;
+    cout << "Nome: " << car[i].name << endl;
+    cout << "Cor: " << car[i].color << endl;
+    cout << "Potência: " << car[i].power << endl;
+    cout << "Velocidade Atual: " << car[i].maxVelocity << endl;
+    cout << "Velocidade Máxima: " << car[i].velocity << endl
+         << endl;
+  };
+};

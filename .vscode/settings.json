@@ -3,6 +3,8 @@
     "iostream": "cpp",
     "ios": "cpp",
     "random": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "system_error": "cpp",
+    "xlocale": "cpp"
   }
 }

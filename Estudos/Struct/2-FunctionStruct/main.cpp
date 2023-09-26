@@ -32,9 +32,9 @@ struct car // criando a estrutura
          << endl;
   };
 
-  void changeVelocity(int chandeVelocity) // muda a velocidade atual do carro
+  void changeVelocity(int changeVelocity) // muda a velocidade atual do carro
   {
-    velocity = chandeVelocity;
+    velocity = changeVelocity;
 
     if (velocity > maxVelocity) // impede que a velocidade máxima seja ultrapassada
     {
