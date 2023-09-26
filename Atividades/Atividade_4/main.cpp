@@ -146,19 +146,19 @@ int main()
          << "* |\t(2) - Carregar dados de um arquivo" << endl
          << "* |\t(0) - Sair" << endl
          << "* |\tDigite uma opção: ";
-    cin >> option; 
+    cin >> option;
     system("cls");
 
     switch (option) // cada caso responde à opção do menu (Option)
     {
-    case 0: // 
+    case 0: //
       cout << "Saindo...";
       Sleep(1000);
       system("cls");
       break;
 
     case 1:
-      insertData(); // insere os dados manualmente
+      insertData();      // insere os dados manualmente
       calculateReport(); // realiza os códigos para gerar o relatório
       separator();
       showReport(); // mostra o relatório
