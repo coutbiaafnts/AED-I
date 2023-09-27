@@ -17,7 +17,7 @@ int main()
   // ifstream ->> ( entrada/leitura (>>) ) sai do arquivo e vai para o programa
   // fstream ->> ( entrada/saída ) não precisa definir um tipo para entrada ou saída
 
-  ifstream read; // criando a varável para o arquivo em modo de leitura
+  ifstream read; // criando a variável para o arquivo em modo de leitura
   string line;   // armazena a linha lida
 
   read.open("fileRead.txt"); // criando o arquivo de fato
