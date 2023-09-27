@@ -17,7 +17,7 @@ int main()
   // ifstream ->> ( entrada/leitura (>>) ) sai do arquivo e vai para o programa
   // fstream ->> ( entrada/saída ) não precisa definir um tipo para entrada ou saída
 
-  fstream write_read; // criando a varável para o arquivo sem determinar o modo
+  fstream write_read; // criando a variável para o arquivo sem determinar o modo
   char option = 's';
   string name, line;
 
