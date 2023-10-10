@@ -16,7 +16,7 @@ int main()
   // ifstream ->> ( entrada/leitura (>>) ) sai do arquivo e vai para o programa
   // fstream ->> ( entrada/saída ) não precisa definir um tipo para entrada ou saída
 
-  ofstream write; // criando a varável para o arquivo em modo de escrita
+  ofstream write; // criando a variável para o arquivo em modo de escrita
 
   // write.open("write.txt"); // criando o arquivo de fato ( sobrescrevendo )
 
