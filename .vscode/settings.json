@@ -5,7 +5,9 @@
     "random": "cpp",
     "ostream": "cpp",
     "system_error": "cpp",
-    "xlocale": "cpp"
+    "xlocale": "cpp",
+    "typeinfo": "cpp",
+    "iosfwd": "cpp"
   },
   "cSpell.words": ["codigo", "opcao", "posicao", "Posicao"]
 }
