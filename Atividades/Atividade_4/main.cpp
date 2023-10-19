@@ -36,7 +36,7 @@ int menu();
 int main()
 {
     int opcao, posicao; // variáveis responsáveis por obter as opções do menu e a posição do livro na lista
-    Livro livro;        // determina um tipo de livro 
+    Livro livro;        // determina um tipo de livro
 
     // executa o menu enquanto a opção for diferente
     do
