@@ -21,7 +21,7 @@ struct Book
 struct listOfBooks
 {
     int countBooks = 0;
-    Book books[maxBooks];
+    Book books[maxBooks]; 
 };
 
 listOfBooks list;
