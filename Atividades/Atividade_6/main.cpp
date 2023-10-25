@@ -43,12 +43,13 @@ int main()
     UINT CPAGE_DEFAULT = GetConsoleOutputCP();
     SetConsoleOutputCP(CPAGE_UTF8);
 
-    int option = menu();
-
     Order order;
 
+    int option;
     do
     {
+        option = menu();
+
         switch (option)
         {
         case 0:
@@ -80,6 +81,14 @@ int main()
             showNextOrder();
             break;
 
+        case 5:
+            exportOrders();
+            break;
+
+        case 6:
+            importOrders();
+            break;
+
         default:
             cout << "Opção inválida! Tente novamente...";
             Sleep(3500);
@@ -101,6 +110,8 @@ int menu()
     cout << "02 - Marcar pedido como concluído\n";
     cout << "03 - Mostrar pedidos\n";
     cout << "04 - Mostrar próximo pedido\n";
+    cout << "05 - Salvar pedidos\n";
+    cout << "04 - Importar pedidos\n";
     cout << "00 - SAIR\n";
     cout << "\n\n>>---------------------------------------<<\n\n";
     cout << "Digite: ";
@@ -123,6 +134,7 @@ Order readKeyboard()
     Order order;
 
     cout << ">>------------------- ANOTANDO PEDIDO ------------------<<\n\n";
+    cin.ignore();
     cout << "Nome do cliente: ";
     getline(cin, order.customerName);
     cout << "Descrição do pedido: ";
@@ -147,10 +159,11 @@ void insertOrder(Order newOrder)
 
 void markAsDone()
 {
+    int option, table = orders.ordersList[0].tableNumb;
+    
     // verifica se existem pedidos anotados
     if (checkOrders())
     {
-        int option, table = orders.ordersList[0].tableNumb;
 
         // verifica se realmente quer marcar como concluído
         cout << "Digite (1) para marcar o pedido da mesa " << table << " como concluído!";
@@ -167,39 +180,27 @@ void markAsDone()
 
 void showOrders()
 {
-    int option;
-
-    do
+    cout << "\n>>------------------- PEDIDOS ------------------<<\n\n";
+    for (int i = 0; i <= orders.end; i++)
     {
-        cout << "\n>>------------------- PEDIDOS ------------------<<\n\n";
-        for (int i = 0; i <= orders.end; i++)
-        {
-            cout << "Nome do cliente: " << orders.ordersList[i].customerName << "\n";
-            cout << "Descrição do pedido: " << orders.ordersList[i].description << "\n";
-            cout << "Número da mesa: " << orders.ordersList[i].tableNumb << "\n\n";
-        }
-        cout << "\n>>----------------------------------------------<<\n\n";
+        cout << "Nome do cliente: " << orders.ordersList[i].customerName << "\n";
+        cout << "Descrição do pedido: " << orders.ordersList[i].description << "\n";
+        cout << "Número da mesa: " << orders.ordersList[i].tableNumb << "\n\n";
+    }
+    cout << "\n>>----------------------------------------------<<\n\n";
 
-        cout << "Digite (1) para voltar ao menu: ";
-        cin >> option;
-    } while (option != 1);
+    system("pause");
 }
 
 void showNextOrder()
 {
-    int option;
+    cout << "\n>>------------------- PRÓXIMO PEDIDO ------------------<<\n\n";
+    cout << "Nome do cliente: " << orders.ordersList[1].customerName << "\n";
+    cout << "Descrição do pedido: " << orders.ordersList[1].description << "\n";
+    cout << "Número da mesa: " << orders.ordersList[1].tableNumb << "\n\n";
+    cout << "\n>>-----------------------------------------------------<<\n\n";
 
-    do
-    {
-        cout << "\n>>------------------- PRÓXIMO PEDIDO ------------------<<\n\n";
-        cout << "Nome do cliente: " << orders.ordersList[1].customerName << "\n";
-        cout << "Descrição do pedido: " << orders.ordersList[1].description << "\n";
-        cout << "Número da mesa: " << orders.ordersList[1].tableNumb << "\n\n";
-        cout << "\n>>-----------------------------------------------------<<\n\n";
-
-        cout << "Digite (1) para voltar ao menu: ";
-        cin >> option;
-    } while (option != 1);
+    system("pause");
 }
 
 void importOrders()
@@ -212,12 +213,14 @@ void importOrders()
         cerr << "\aError: Não foi possível abrir o arquivo\n";
     else
     {
-        read >> orders.end;
         for (int i = 0; i <= orders.end; i++)
         {
             getline(read >> ::ws, orders.ordersList[i].customerName);
+            cout << orders.ordersList[i].customerName;
             getline(read >> ::ws, orders.ordersList[i].description);
+            cout << orders.ordersList[i].description;
             read >> orders.ordersList[i].tableNumb;
+            cout << orders.ordersList[i].tableNumb << "\n";
         }
 
         cout << "Importação realizada!";
@@ -236,7 +239,6 @@ void exportOrders()
         cerr << "\aError: Não foi possível abrir o arquivo\n";
     else
     {
-        write << orders.end << endl;
         for (int i = 0; i <= orders.end; i++)
         {
             write << orders.ordersList[i].customerName << endl;
