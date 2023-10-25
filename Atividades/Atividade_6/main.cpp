@@ -17,8 +17,8 @@ struct Order
 // estrutura da fila de pedidos
 struct OrdersRow
 {
-    int end = -1;
     Order ordersList[MAX_ORDERS];
+    int end = -1;
 };
 
 OrdersRow orders;
@@ -54,8 +54,6 @@ int main()
         {
         case 0:
             // sai do programa
-            cout << "Saindo...";
-            Sleep(3500);
             exit(0);
 
         case 1:
@@ -64,8 +62,7 @@ int main()
             cout << "Anotando pedido...\n";
             // insere no vetor
             insertOrder(order);
-            cout << "Pedido anotado com sucesso!\n";
-            Sleep(3500);
+            Sleep(2000);
             break;
 
         case 2:
@@ -86,12 +83,15 @@ int main()
             break;
 
         case 6:
-            importOrders();
+            order = importOrders();
+            cout << "Anotando pedidos...\n";
+            insertOrder(order);
+            Sleep(2000);
             break;
 
         default:
             cout << "Opção inválida! Tente novamente...";
-            Sleep(3500);
+            Sleep(2000);
             break;
         }
         system("cls");
@@ -111,11 +111,13 @@ int menu()
     cout << "03 - Mostrar pedidos\n";
     cout << "04 - Mostrar próximo pedido\n";
     cout << "05 - Salvar pedidos\n";
-    cout << "04 - Importar pedidos\n";
+    cout << "06 - Importar pedidos\n";
     cout << "00 - SAIR\n";
     cout << "\n\n>>---------------------------------------<<\n\n";
     cout << "Digite: ";
     cin >> option;
+
+    system("cls");
 
     return option;
 }
@@ -123,8 +125,8 @@ int menu()
 // verifica se existem pedidos na fila
 bool checkOrders()
 {
-    // se o fim da fila por maior que (-1), ou seja, conteúdo existente
-    if (orders.end > -1)
+    // se o fim da fila por maior que (-1), ou seja, conteúdo existente. E verifica se a fila está cheia.
+    if ((orders.end > -1) && (orders.end < MAX_ORDERS - 1))
         return true;
     return false;
 }
@@ -149,18 +151,19 @@ Order readKeyboard()
 void insertOrder(Order newOrder)
 {
     // se o fim da fila for menor que o tamanho máximo do vetor ele anota o pedido
-    if (orders.end < MAX_ORDERS - 1)
+    if (checkOrders())
     {
         orders.end++;
         // insere o novo pedido no fim da fila
         orders.ordersList[orders.end] = newOrder;
+        cout << "Pedido anotado com sucesso!\n";
     }
 }
 
 void markAsDone()
 {
     int option, table = orders.ordersList[0].tableNumb;
-    
+
     // verifica se existem pedidos anotados
     if (checkOrders())
     {
@@ -170,7 +173,7 @@ void markAsDone()
         if (option == 1)
         {
             // reorganiza a fila sobrescrevendo os pedidos do início
-            for (int i = 0; i < orders.end; i++)
+            for (int i = 0; i <= orders.end; i++)
                 orders.ordersList[i] = orders.ordersList[i + 1];
             orders.end--;
             cout << " Pedido da mesa " << table << " marcado como concluído!\n";
@@ -207,6 +210,7 @@ void importOrders()
 {
     ifstream read;
 
+    // abre o arquivo em mode de leitura
     read.open("pedidos.txt");
 
     if (read.fail())
@@ -216,15 +220,12 @@ void importOrders()
         for (int i = 0; i <= orders.end; i++)
         {
             getline(read >> ::ws, orders.ordersList[i].customerName);
-            cout << orders.ordersList[i].customerName;
             getline(read >> ::ws, orders.ordersList[i].description);
-            cout << orders.ordersList[i].description;
             read >> orders.ordersList[i].tableNumb;
-            cout << orders.ordersList[i].tableNumb << "\n";
+            cout << "Importação realizada!";
         }
 
-        cout << "Importação realizada!";
-        Sleep(3500);
+        Sleep(2000);
         read.close();
     }
 }
@@ -239,14 +240,15 @@ void exportOrders()
         cerr << "\aError: Não foi possível abrir o arquivo\n";
     else
     {
+        write << orders.end << endl;
         for (int i = 0; i <= orders.end; i++)
         {
             write << orders.ordersList[i].customerName << endl;
             write << orders.ordersList[i].description << endl;
             write << orders.ordersList[i].tableNumb << endl;
+            cout << "Exportação realizada!";
         }
-        cout << "Exportação realizada!";
-        Sleep(3500);
+        Sleep(2000);
         write.close();
     }
 }
