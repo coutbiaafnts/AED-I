@@ -17,8 +17,8 @@ struct Order
 // estrutura da fila de pedidos
 struct OrdersRow
 {
-    Order ordersList[MAX_ORDERS];
     int end = -1;
+    Order ordersList[MAX_ORDERS];
 };
 
 OrdersRow orders;
@@ -54,15 +54,17 @@ int main()
         {
         case 0:
             // sai do programa
+            cout << "Saindo...";
+            Sleep(2000);
             exit(0);
 
         case 1:
             // lê as informações do pedido
             order = readKeyboard();
             cout << "Anotando pedido...\n";
+            Sleep(2000);
             // insere no vetor
             insertOrder(order);
-            Sleep(2000);
             break;
 
         case 2:
@@ -83,10 +85,10 @@ int main()
             break;
 
         case 6:
-            order = importOrders();
+            importOrders();
             cout << "Anotando pedidos...\n";
-            insertOrder(order);
             Sleep(2000);
+            insertOrder(order);
             break;
 
         default:
@@ -110,8 +112,8 @@ int menu()
     cout << "02 - Marcar pedido como concluído\n";
     cout << "03 - Mostrar pedidos\n";
     cout << "04 - Mostrar próximo pedido\n";
-    cout << "05 - Salvar pedidos\n";
-    cout << "06 - Importar pedidos\n";
+    cout << "05 - Exportar pedidos\n";
+    cout << "04 - Importar pedidos\n";
     cout << "00 - SAIR\n";
     cout << "\n\n>>---------------------------------------<<\n\n";
     cout << "Digite: ";
@@ -125,8 +127,8 @@ int menu()
 // verifica se existem pedidos na fila
 bool checkOrders()
 {
-    // se o fim da fila por maior que (-1), ou seja, conteúdo existente. E verifica se a fila está cheia.
-    if ((orders.end > -1) && (orders.end < MAX_ORDERS - 1))
+    // se o fim da fila por maior que (-1), ou seja, conteúdo existente
+    if (orders.end > -1)
         return true;
     return false;
 }
@@ -151,12 +153,13 @@ Order readKeyboard()
 void insertOrder(Order newOrder)
 {
     // se o fim da fila for menor que o tamanho máximo do vetor ele anota o pedido
-    if (checkOrders())
+    if (orders.end < MAX_ORDERS - 1)
     {
         orders.end++;
         // insere o novo pedido no fim da fila
         orders.ordersList[orders.end] = newOrder;
         cout << "Pedido anotado com sucesso!\n";
+        system("pause");
     }
 }
 
@@ -173,7 +176,7 @@ void markAsDone()
         if (option == 1)
         {
             // reorganiza a fila sobrescrevendo os pedidos do início
-            for (int i = 0; i <= orders.end; i++)
+            for (int i = 0; i < orders.end; i++)
                 orders.ordersList[i] = orders.ordersList[i + 1];
             orders.end--;
             cout << " Pedido da mesa " << table << " marcado como concluído!\n";
@@ -210,21 +213,25 @@ void importOrders()
 {
     ifstream read;
 
-    // abre o arquivo em mode de leitura
     read.open("pedidos.txt");
 
     if (read.fail())
+    {
         cerr << "\aError: Não foi possível abrir o arquivo\n";
+        system("pause");
+        read.clear();
+    }
     else
     {
-        for (int i = 0; i <= orders.end; i++)
+        read >> orders.end;
+        for (int i = 0; i <= MAX_ORDERS - 1; i++)
         {
             getline(read >> ::ws, orders.ordersList[i].customerName);
             getline(read >> ::ws, orders.ordersList[i].description);
             read >> orders.ordersList[i].tableNumb;
-            cout << "Importação realizada!";
+            cout << "Pedido da mesa " << orders.ordersList[i].tableNumb << " foi anotado com sucesso!\n";
         }
-
+        cout << "Importação realizada!";
         Sleep(2000);
         read.close();
     }
@@ -240,14 +247,13 @@ void exportOrders()
         cerr << "\aError: Não foi possível abrir o arquivo\n";
     else
     {
-        write << orders.end << endl;
         for (int i = 0; i <= orders.end; i++)
         {
             write << orders.ordersList[i].customerName << endl;
             write << orders.ordersList[i].description << endl;
             write << orders.ordersList[i].tableNumb << endl;
-            cout << "Exportação realizada!";
         }
+        cout << "Exportação realizada!";
         Sleep(2000);
         write.close();
     }
