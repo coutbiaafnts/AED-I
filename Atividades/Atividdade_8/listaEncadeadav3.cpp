@@ -49,6 +49,8 @@ void inserirUltima()
     L->ultimo = x; // x passa a ser o último
     L->ultimo->proximo = NULL; // o próximo item é definido como nulo
 }
+
+// mostra os itens da lista
 void mostrar()
 {
     Item *aux; // cria um item auxiliar
@@ -61,6 +63,7 @@ void mostrar()
     }
 }
 
+// insere um item na primeira posição
 void inserirPrimeira()
 {
     Item *x = new Item; // cria um item x
@@ -153,6 +156,7 @@ void removerUltima()
              << "Vazia" << endl; // imprime vazia
     }
 }
+
 // remove o item de uma posição determinada pelo usuário
 void removerPosicao(int posicao)
 {
@@ -185,6 +189,7 @@ void removerPosicao(int posicao)
         } 
     }
 }
+
 // exibe o menu e retorna a opção inserida
 int menu()
 {
