@@ -8,6 +8,7 @@ using namespace std;
 using namespace chrono;
 
 int welcome();
+bool verifyExpenses();
 void addExpense(), listExpense(), editExpense(), removeExpense(), balance();
 
 vector<double> expenses;
@@ -46,7 +47,9 @@ int main()
         break;
     case 0:
         system("cls");
-        cout << endl << endl << "   Saindo...";
+        cout << endl
+             << endl
+             << "   Saindo...";
         Sleep(400);
         system("taskkill /f /im cmd.exe");
         exit(0);
@@ -83,7 +86,8 @@ void addExpense()
 {
     system("cls");
 
-    int opt, expense;
+    int opt;
+    double expense;
 
     cout << ">>--------------------------------- ADICIONAR DESPESA ---------------------------------<<" << endl
          << endl;
@@ -120,13 +124,23 @@ void listExpense()
 
     cout << ">>--------------------------------- LISTANDO DESPESAS ---------------------------------<<" << endl
          << endl;
-    for (int i = 0; i < expenses.size(); i++)
-    {
-        cout << i + 1 << ". R$" << expenses[i] << endl;
-    }
-    system("pause");
 
-    main();
+    if (verifyExpenses())
+    {
+        for (int i = 0; i < expenses.size(); i++)
+        {
+            cout << i + 1 << ". R$" << expenses[i] << endl;
+        }
+        system("pause");
+
+        main();
+    }
+    else
+    {
+        cout << "   Lista de despesas vazia...";
+        Sleep(1500);
+        main();
+    }
 }
 
 void editExpense()
@@ -138,24 +152,34 @@ void editExpense()
 
     cout << ">>--------------------------------- EDITANDO DESPESAS ---------------------------------<<" << endl
          << endl;
-    cout << "   Informe a posição da despesa: ";
-    cin >> position;
-    cout << "   Informe o novo valor: ";
-    cin >> newExpense;
 
-    position--;
-
-    cout << "   Alterando o valor da despesa..." << endl;
-    Sleep(1500);
-    for (int i = 0; i < expenses.size(); i++)
+    if (verifyExpenses())
     {
-        if (i == position)
-        {
-            expenses[i] = newExpense;
-        }
-    }
+        cout << "   Informe a posição da despesa: ";
+        cin >> position;
+        cout << "   Informe o novo valor: ";
+        cin >> newExpense;
 
-    main();
+        position--;
+
+        cout << "   Alterando o valor da despesa..." << endl;
+        Sleep(1500);
+        for (int i = 0; i < expenses.size(); i++)
+        {
+            if (i == position)
+            {
+                expenses[i] = newExpense;
+            }
+        }
+
+        main();
+    }
+    else
+    {
+        cout << "   Lista de despesas vazia...";
+        Sleep(1500);
+        main();
+    }
 }
 
 void removeExpense()
@@ -167,28 +191,37 @@ void removeExpense()
     cout << ">>--------------------------------- REMOVENDO DESPESAS ---------------------------------<<" << endl
          << endl;
 
-    cout << "   Informe a posição da despesa: ";
-    cin >> position;
-    cout << "   Informe quantas posições deseja remover: ";
-    cin >> amount;
-
-    position--;
-
-    if (amount == 1)
+    if (verifyExpenses())
     {
-        cout << "   Removendo despesa..." << endl;
-        Sleep(1500);
+        cout << "   Informe a posição da despesa: ";
+        cin >> position;
+        cout << "   Informe quantas posições deseja remover: ";
+        cin >> amount;
+
+        position--;
+
+        if (amount == 1)
+        {
+            cout << "   Removendo despesa..." << endl;
+            Sleep(1500);
+        }
+        else if (amount > 1)
+        {
+            cout << "   Removendo despesas..." << endl;
+            Sleep(1500);
+        }
+
+        ite = expenses.begin() + position;
+        expenses.erase(ite, ite + amount);
+
+        main();
     }
-    else if (amount > 1)
+    else
     {
-        cout << "   Removendo despesas..." << endl;
+        cout << "   Lista de despesas vazia...";
         Sleep(1500);
+        main();
     }
-
-    ite = expenses.begin() + position;
-    expenses.erase(ite, ite + amount);
-
-    main();
 }
 
 void balance()
@@ -200,15 +233,36 @@ void balance()
     cout << ">>--------------------------------- SALDO ---------------------------------<<" << endl
          << endl;
 
-    cout << "   Verificando saldo..." << endl;
-    Sleep(1500);
+    if (verifyExpenses())
+    {
+        cout << "   Verificando saldo..." << endl;
+        Sleep(1500);
 
-    for (int i = 0; i < expenses.size(); i++)
-        balance = balance + expenses[i];
+        for (int i = 0; i < expenses.size(); i++)
+            balance = balance + expenses[i];
 
-    cout << "   Saldo atual: R$" << balance << endl
-         << endl;
+        cout << "   Saldo atual: R$" << balance << endl
+             << endl;
 
-    system("pause");
-    main();
+        system("pause");
+        main();
+    }
+    else
+    {
+        cout << "   Lista de despesas vazia...";
+        Sleep(1500);
+        main();
+    }
+}
+
+bool verifyExpenses()
+{
+    if (expenses.size() > 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
