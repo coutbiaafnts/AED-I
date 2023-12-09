@@ -45,7 +45,11 @@ int main()
         balance();
         break;
     case 0:
-        return 0;
+        system("cls");
+        cout << endl << endl << "   Saindo...";
+        Sleep(400);
+        system("taskkill /f /im cmd.exe");
+        exit(0);
     default:
         cout << endl
              << "!ERROR: Opção inválida." << endl;
