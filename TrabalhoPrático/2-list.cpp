@@ -13,6 +13,9 @@ struct task
 
 list<task> tasksList;
 
+int menu();
+void addTask(), showTasks(), sortTasks(), deleteTask(), taskDone();
+
 int main()
 {
     UINT CPAGE_UTF8 = 65001;
@@ -20,9 +23,6 @@ int main()
 
     HANDLE colors = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(colors, 11);
-
-    int menu();
-    void addTask(), showTasks();
 
     system("cls");
 
@@ -39,10 +39,13 @@ int main()
         showTasks();
         break;
     case 3:
+        sortTasks();
         break;
     case 4:
+        deleteTask();
         break;
     case 5:
+        taskDone();
         break;
     case 0:
         system("cls");
@@ -71,6 +74,7 @@ int menu()
     cout << "2. Listar tarefas" << endl;
     cout << "3. Organizar por prioridade" << endl;
     cout << "4. Deletar tarefa" << endl;
+    cout << "5. Marcar tarefa como concluída" << endl;
     cout << "0. Sair" << endl;
     cout << ">>----------------------------------------------------------------------------------------<<" << endl
          << endl;
@@ -84,7 +88,7 @@ void addTask()
 {
     system("cls");
     task newTask;
-    
+
     cout << ">>--------------------------------- ADICIONANDO TAREFA ---------------------------------<<" << endl;
     cout << "   Insira o título: ";
     cin.ignore();
@@ -98,11 +102,114 @@ void addTask()
 
     Sleep(1500);
     cout << "   Tarefa adicionada com sucesso!";
+    Sleep(1500);
+    main();
 }
 
-void showTasks(){
+void showTasks()
+{
     system("cls");
-    cout << ">>--------------------------------- LISTANDO TAREFAS ---------------------------------<<" << endl;
+    cout << ">>--------------------------------- LISTANDO TAREFAS ---------------------------------<<" << endl
+         << endl;
 
-    
+    if (!tasksList.empty())
+    {
+        for (auto task : tasksList)
+        {
+            cout << "   Título: " << task.title << endl;
+            cout << "   Tarefa: " << task.text << endl;
+            cout << "   Prioridade: " << task.priority << endl
+                 << endl;
+        }
+    }
+    else
+    {
+        cout << "   Nenhuma tarefa foi inserida!" << endl
+             << endl;
+    }
+
+    cout << ">>--------------------------------<<" << endl;
+    system("pause");
+    main();
+}
+
+bool verifyPriority(task a, task b)
+{
+    return a.priority < b.priority;
+}
+
+void sortTasks()
+{
+    system("cls");
+    cout << ">>--------------------------------- ORGANIZANDO TAREFAS ---------------------------------<<" << endl;
+
+    if (!tasksList.empty())
+    {
+        cout << "   Em processamento..." << endl;
+        tasksList.sort(verifyPriority);
+        cout << endl
+             << endl;
+        Sleep(1500);
+        cout << "   Tarefas organizadas com sucesso!" << endl;
+        Sleep(1500);
+    }
+    else
+    {
+        cout << "   Nenhuma tarefa foi inserida!" << endl
+             << endl;
+        Sleep(1500);
+    }
+
+    main();
+}
+
+void deleteTask()
+{
+    system("cls");
+    int position;
+    cout << ">>--------------------------------- DELETANDO TAREFA ---------------------------------<<" << endl;
+    if (!tasksList.empty())
+    {
+        cout << "   Informe a posição da despesa: ";
+        cin >> position;
+
+        auto it = tasksList.begin();
+        advance(it, position - 1);
+
+        if (it != tasksList.end())
+        {
+            tasksList.erase(it);
+        }
+
+        cout << "   Em processamento..." << endl;
+        Sleep(1500);
+        cout << "   Tarefa deletada com sucesso..." << endl;
+
+    }
+    else
+    {
+        cout << "   Nenhuma tarefa foi inserida!" << endl
+             << endl;
+        Sleep(1500);
+    }
+
+    main();
+}
+
+void taskDone(){
+    system("cls");
+    cout << ">>--------------------------------- CONCLUINDO TAREFA ---------------------------------<<" << endl;
+    if (!tasksList.empty()){
+        cout << "   Marcando a 1ª tarefa como concluída..." << endl;
+        tasksList.pop_front();
+        cout << "   Concluída!" << endl;
+        Sleep(1500);
+    }
+    else
+    {
+        cout << "   Nenhuma tarefa foi inserida!" << endl
+             << endl;
+        Sleep(1500);
+    }
+    main();
 }

@@ -231,7 +231,7 @@ void balance()
         Sleep(1500);
 
         for (int i = 0; i < expenses.size(); i++)
-            balance = balance + expenses[i];
+            balance += expenses[i];
 
         cout << "   Saldo atual: R$" << balance << endl
              << endl;
