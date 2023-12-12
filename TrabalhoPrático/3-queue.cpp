@@ -1,6 +1,5 @@
 #include <iostream>
 #include <windows.h>
-#include <string.h>
 #include <queue>
 
 using namespace std;
@@ -74,7 +73,7 @@ int menu()
    cout << "5. Número de músicas na fila" << endl;
    cout << "6. Carregar músicas" << endl;
    cout << "0. Sair" << endl;
-   cout << ">>----------------------------------------------------------------------------------------<<" << endl
+   cout << ">>------------------------------------------------------------------------------------<<" << endl
         << endl;
    cout << "   Digite uma opção: ";
    cin >> option;
